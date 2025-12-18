@@ -9,8 +9,14 @@ This guide explains the complete learning workflow: how to progress, where to sa
 1. **Install PostgreSQL** (Recommended)
    - **Download**: https://www.postgresql.org/download/
    - **Windows**: Use the official installer
+     - During installation, remember the password you set for the `postgres` user
+     - You can skip Stack Builder (it's optional)
    - **macOS**: `brew install postgresql` or use Postgres.app
    - **Linux**: `sudo apt-get install postgresql postgresql-contrib` (Ubuntu/Debian)
+   
+   **Verify PostgreSQL is running:**
+   - **Windows**: Open Services (Win+R → `services.msc`) and check for "postgresql-x64-18" (should be Running)
+   - **macOS/Linux**: `brew services list` or `sudo systemctl status postgresql`
    
    **Alternative**: If you prefer SQLite for simplicity:
    - **SQLite**: https://www.sqlite.org/download.html
@@ -18,17 +24,161 @@ This guide explains the complete learning workflow: how to progress, where to sa
 
 2. **Set Up the Course Database**
 
-   **For PostgreSQL (Recommended):**
-   ```bash
-   # Create database
-   psql -U postgres
-   CREATE DATABASE sql_mastery;
-   \q
+   **Method A: Using MySQL Extension by cweijan (Recommended - Easiest!)**
+
+   This is the easiest method - you can do everything from VS Code/Cursor without using the command line!
+
+   **Step 2A.1: Install the Extension**
+   - Open VS Code/Cursor
+   - Press `Ctrl+Shift+X` (or `Cmd+Shift+X` on Mac) to open Extensions
+   - Search for "MySQL" by `cweijan`
+   - Click "Install"
+   - **Note**: Despite the name "MySQL", this extension supports PostgreSQL, SQLite, MySQL, and many other databases!
+
+   **Step 2A.2: Connect to PostgreSQL**
+   - Click the database icon in the left sidebar (or press `Ctrl+Shift+P` and type "Database")
+   - Click the "+" button or "Add Connection"
+   - Select "PostgreSQL" as the database type (important: not MySQL!)
+   - Enter connection details:
+     - **Host**: `localhost`
+     - **Port**: `5432` (default PostgreSQL port)
+     - **Username**: `postgres` (default PostgreSQL superuser)
+     - **Password**: (the password you set during PostgreSQL installation)
+     - **Database**: `postgres` (connect to default database first)
+   - Click "Connect" or "Save"
+   - You should see the connection appear in the extension sidebar
+
+   **Step 2A.3: Create the Course Database**
+   - Once connected, you'll see a query panel or can open a new SQL file
+   - Run this query to create the database:
+     ```sql
+     CREATE DATABASE sql_mastery;
+     ```
+   - Right-click the query → "Run Query" or click the "Run" button
+   - You should see a success message
+
+   **Step 2A.4: Connect to the New Database**
+   - Disconnect from the current connection (right-click → "Disconnect" or click the disconnect icon)
+   - Add a new connection (click "+" again)
+   - Use the same settings, but change:
+     - **Database**: `sql_mastery` (instead of `postgres`)
+   - Click "Connect"
+   - You should now see `sql_mastery` in the sidebar
+
+   **Step 2A.5: Run the Setup Script**
+   - Open the file `database/setup.sql` in VS Code/Cursor
+   - Make sure you're connected to `sql_mastery` database (check the extension sidebar)
+   - Select all the SQL in the file (`Ctrl+A` or `Cmd+A`)
+   - Right-click → "Run Query" or click the "Run" button
+   - Wait for all queries to execute (you'll see progress in the output panel)
+   - You should see messages like:
+     - "15 rows affected" (for employees table)
+     - "12 rows affected" (for products table)
+     - etc.
+
+   **Step 2A.6: Verify Setup**
+   - In the extension sidebar, expand your `sql_mastery` connection
+   - Expand "Tables" - you should see:
+     - `customers`
+     - `departments`
+     - `employees`
+     - `order_items`
+     - `orders`
+     - `products`
+     - `sales`
+     - `suppliers`
+   - Right-click on `employees` → "Open Table" to view the data
+   - Or run this query:
+     ```sql
+     SELECT COUNT(*) FROM employees;
+     ```
+     - Should return: `15`
+
+   **Method B: Using Command Line (Alternative)**
+
+   If you prefer using the command line or if the extension method doesn't work, you can use `psql` directly.
+
+   **For PostgreSQL:**
+
+   **Step 2B.1: Ensure PostgreSQL is in your PATH**
+   - **Windows**: Add PostgreSQL bin directory to PATH:
+     - Usually: `C:\Program Files\PostgreSQL\18\bin`
+     - Search "Environment Variables" in Windows
+     - Edit "Path" → Add → PostgreSQL bin directory
+     - Restart your terminal/VS Code after adding to PATH
+   - **macOS/Linux**: Usually already in PATH after installation
+   - **Verify**: Open terminal and type `psql --version` (should show version number)
+
+   **Step 2B.2: Create the Database**
    
-   # Run setup script
+   **Option 1: Single Command (Easiest)**
+   ```bash
+   # Create database in one command
+   psql -U postgres -c "CREATE DATABASE sql_mastery;"
+   ```
+   - It will prompt for your PostgreSQL password (type it and press Enter - password won't show)
+   - You should see: `CREATE DATABASE`
+   
+   **Option 2: Interactive Session**
+   ```bash
+   # Connect to PostgreSQL
+   psql -U postgres
+   
+   # You'll be prompted for password, then enter psql prompt
+   # In psql, run:
+   CREATE DATABASE sql_mastery;
+   
+   # Exit psql
+   \q
+   ```
+
+   **Step 2B.3: Run the Setup Script**
+   ```bash
+   # Navigate to your project directory first
+   cd D:\DIRECTORY\projects\SQL-Everyday
+   
+   # Run the setup script
    psql -U postgres -d sql_mastery -f database/setup.sql
    ```
+   - It will prompt for your password
+   - You should see output like:
+     ```
+     CREATE TABLE
+     INSERT 0 15
+     CREATE TABLE
+     INSERT 0 12
+     ...
+     ```
+   - This means all tables and data were created successfully
+
+   **Step 2B.4: Verify Setup (Command Line)**
+   ```bash
+   # Check if employees table has data
+   psql -U postgres -d sql_mastery -c "SELECT COUNT(*) FROM employees;"
+   ```
+   - Should return: `count` with value `15`
+
+   **Alternative: Using PGPASSWORD Environment Variable**
    
+   If you don't want to type the password each time:
+   ```bash
+   # Windows PowerShell
+   $env:PGPASSWORD="your_password"
+   psql -U postgres -c "CREATE DATABASE sql_mastery;"
+   psql -U postgres -d sql_mastery -f database/setup.sql
+   
+   # Windows Command Prompt
+   set PGPASSWORD=your_password
+   psql -U postgres -c "CREATE DATABASE sql_mastery;"
+   psql -U postgres -d sql_mastery -f database/setup.sql
+   
+   # macOS/Linux
+   export PGPASSWORD="your_password"
+   psql -U postgres -c "CREATE DATABASE sql_mastery;"
+   psql -U postgres -d sql_mastery -f database/setup.sql
+   ```
+   **Note**: This is less secure as the password is visible in command history. Use with caution.
+
    **For SQLite (Alternative):**
    ```bash
    cd database
@@ -36,21 +186,38 @@ This guide explains the complete learning workflow: how to progress, where to sa
    ```
 
 3. **Verify Setup**
+
+   Run this query to check if the database is set up correctly:
    ```sql
-   -- Run this to check if database is set up correctly
    SELECT COUNT(*) FROM employees;
    -- Should return: 15
    ```
-   
-   **PostgreSQL:**
+
+   **Using MySQL Extension (Method A):**
+   - Open a new SQL file or use the extension's query panel
+   - Run the query above
+   - Right-click → "Run Query"
+   - Check the results panel - should show `count: 15`
+   - Also check the extension sidebar: expand `sql_mastery` → "Tables" to see all 8 tables
+
+   **Using Command Line (Method B):**
    ```bash
+   # PostgreSQL
    psql -U postgres -d sql_mastery -c "SELECT COUNT(*) FROM employees;"
-   ```
+   # Should output: count with value 15
    
-   **SQLite:**
-   ```bash
+   # SQLite
    sqlite3 database/sql_mastery.db "SELECT COUNT(*) FROM employees;"
+   # Should output: 15
    ```
+
+   **Quick Verification Checklist:**
+   - [ ] Database `sql_mastery` exists
+   - [ ] Can see 8 tables in extension sidebar (or via `\dt` in psql)
+   - [ ] `employees` table has 15 rows
+   - [ ] `products` table has 12 rows
+   - [ ] `customers` table has 10 rows
+   - [ ] Can run queries without errors
 
 ### Step 2: Follow the Learning Path
 
@@ -153,42 +320,90 @@ level-01-fundamentals/
 
 ### Recommended: Run SQL Directly in Your IDE
 
-**This is the easiest method!** Run SQL queries directly in VS Code/Cursor:
+**This is the easiest method!** Run SQL queries directly in VS Code/Cursor using the MySQL extension by cweijan.
 
-#### Setup for VS Code/Cursor
+#### Complete Guide: Using MySQL Extension by cweijan
 
 **For PostgreSQL (Recommended):**
 
 1. **Install MySQL Extension by cweijan**
-   - Open Extensions (Ctrl+Shift+X)
+   - Open Extensions (`Ctrl+Shift+X` or `Cmd+Shift+X` on Mac)
    - Search for "MySQL" by `cweijan`
-   - Install the extension (despite the name, it supports PostgreSQL, SQLite, and many databases)
+   - Click "Install"
+   - **Note**: Despite the name "MySQL", this extension supports PostgreSQL, SQLite, MySQL, and many other databases!
 
 2. **Connect to PostgreSQL Database**
-   - Click the database icon in the left sidebar (or open Command Palette: Ctrl+Shift+P)
-   - Select "Add Connection" or click the "+" button
-   - Choose "PostgreSQL" as the database type
+   - Click the database icon in the left sidebar (or press `Ctrl+Shift+P` and type "Database")
+   - Click the "+" button or "Add Connection"
+   - **Important**: Select "PostgreSQL" as the database type (not MySQL!)
    - Enter connection details:
      - **Host**: `localhost`
      - **Port**: `5432` (default PostgreSQL port)
      - **Database**: `sql_mastery`
      - **Username**: `postgres` (or your PostgreSQL username)
-     - **Password**: (your PostgreSQL password)
+     - **Password**: (your PostgreSQL password - the one you set during installation)
    - Click "Connect" or "Save"
+   - You should see your connection appear in the extension sidebar with a green indicator
 
-3. **Run Queries**
-   - Open your `.sql` file (e.g., `my-solutions-01.sql`)
-   - Select the query (or place cursor in it)
-   - **Method A**: Right-click → "Run Query" or "Execute Query"
-   - **Method B**: Use the "Run" button in the editor toolbar
-   - **Method C**: Use keyboard shortcut (check extension settings)
-   - **Method D**: Use the extension's query panel
+3. **Browse Your Database**
+   - In the extension sidebar, expand your `sql_mastery` connection
+   - Expand "Tables" to see all tables:
+     - `customers`, `departments`, `employees`, `order_items`, `orders`, `products`, `sales`, `suppliers`
+   - Right-click any table to:
+     - **"Open Table"** - View all data in the table
+     - **"View Structure"** - See table columns and types
+     - **"Generate Query"** - Auto-generate SELECT queries
+   - Double-click a table name to quickly view its data
 
-4. **View Results**
+4. **Run Queries - Multiple Methods**
+
+   **Method 1: Right-Click Menu (Easiest)**
+   - Open your `.sql` file (e.g., `level-01-fundamentals/my-solutions-01.sql`)
+   - Select the query you want to run (highlight it with your mouse)
+   - Right-click on the selected query
+   - Choose "Run Query" or "Execute Query"
    - Results appear in a panel below your editor
-   - You can see the data in tabular format
-   - Row counts and execution time are displayed
-   - You can export results if needed
+
+   **Method 2: Run Button**
+   - Place your cursor anywhere in the query
+   - Look for a "Run" button in the editor toolbar (usually appears above the query)
+   - Click the "Run" button
+   - The extension will automatically detect which query to run
+
+   **Method 3: Keyboard Shortcut**
+   - Select your query
+   - Press `Ctrl+Shift+E` (or check extension settings for custom shortcuts)
+   - Query executes immediately
+
+   **Method 4: Extension Query Panel**
+   - Click on the database icon in the sidebar
+   - Some extensions provide a query panel where you can type and run queries directly
+   - Results appear in the same panel
+
+   **Method 5: Run Entire File**
+   - To run all queries in a file:
+     - Select all (`Ctrl+A` or `Cmd+A`)
+     - Right-click → "Run Query"
+     - All queries execute sequentially
+     - Results appear one after another
+
+5. **View and Work with Results**
+   - Results appear in a panel below your editor (or in a separate tab)
+   - **Tabular View**: Data displayed in a table format
+   - **Sorting**: Click column headers to sort
+   - **Filtering**: Some extensions allow filtering results
+   - **Row Count**: See how many rows were returned
+   - **Execution Time**: See how long the query took
+   - **Export**: Right-click results to export as CSV, JSON, etc.
+   - **Copy**: Select cells or rows and copy to clipboard
+
+6. **Tips for Running Queries**
+   - **Multiple Queries**: You can have multiple queries in one file, separated by semicolons
+   - **Comments**: Use `--` for single-line comments (they won't be executed)
+   - **Selective Execution**: Only the selected query (or query where cursor is) will run
+   - **Save First**: Always save your `.sql` file before running queries
+   - **Connection Check**: Make sure you're connected to `sql_mastery` database (check sidebar)
+   - **Error Messages**: If a query fails, error messages appear in the output panel
 
 **For SQLite (Alternative):**
 
@@ -204,39 +419,81 @@ level-01-fundamentals/
 3. **Run Queries**
    - Select query and press `Ctrl+Shift+E` or right-click → "Run Query"
 
-#### Quick Start Example with MySQL Extension (cweijan)
+#### Quick Start Example: Complete Workflow
 
-**For PostgreSQL:**
+**Step-by-Step Example:**
 
-1. **First-time setup:**
-   - Install PostgreSQL and create database (see Step 1 above)
-   - Install "MySQL" extension by cweijan in VS Code/Cursor
-   - Add PostgreSQL connection:
-     - Click database icon in sidebar
-     - Click "+" or "Add Connection"
-     - Select "PostgreSQL"
-     - Enter: localhost, 5432, sql_mastery, postgres, (password)
-     - Click "Connect"
-   - Connection should appear in extension sidebar
+1. **Install PostgreSQL** (if not already installed)
+   - Download from https://www.postgresql.org/download/
+   - Install and remember your `postgres` user password
 
-2. **Create and run queries:**
+2. **Install MySQL Extension by cweijan**
+   - Open Extensions (`Ctrl+Shift+X`)
+   - Search "MySQL" by `cweijan`
+   - Click "Install"
+
+3. **Create Database Connection**
+   - Click database icon in left sidebar
+   - Click "+" button
+   - Select "PostgreSQL" (important!)
+   - Enter:
+     - Host: `localhost`
+     - Port: `5432`
+     - Database: `postgres` (connect to default first)
+     - Username: `postgres`
+     - Password: (your PostgreSQL password)
+   - Click "Connect"
+
+4. **Create the Course Database**
+   - In a new SQL file or query panel, run:
+     ```sql
+     CREATE DATABASE sql_mastery;
+     ```
+   - Right-click → "Run Query"
+   - Wait for success message
+
+5. **Connect to sql_mastery Database**
+   - Disconnect from `postgres` connection
+   - Add new connection with same settings, but:
+     - Database: `sql_mastery` (instead of `postgres`)
+   - Click "Connect"
+
+6. **Run Setup Script**
+   - Open `database/setup.sql`
+   - Select all (`Ctrl+A`)
+   - Right-click → "Run Query"
+   - Wait for all tables to be created (check output panel)
+
+7. **Verify Setup**
+   - In extension sidebar, expand `sql_mastery` → "Tables"
+   - You should see 8 tables listed
+   - Right-click `employees` → "Open Table"
+   - Should see 15 employee records
+
+8. **Create and Run Your First Query**
    - Create `level-01-fundamentals/my-solutions-01.sql`
    - Write your query:
      ```sql
+     -- Exercise 1: Basic SELECT
      SELECT first_name, last_name, email
      FROM employees;
      ```
-   - Select the query (or place cursor in it)
-   - Right-click → "Run Query" or click "Run" button
-   - See results instantly in the results panel!
+   - Select the query text
+   - Right-click → "Run Query"
+   - See results in the panel below!
 
-3. **Quick tips for MySQL extension (cweijan):**
-   - Browse tables in the extension sidebar
-   - Right-click tables to view data, structure, or generate queries
-   - Double-click tables to view all data
-   - Results panel shows data in tabular format with sorting/filtering
-   - You can export query results
-   - Extension supports multiple database types (PostgreSQL, SQLite, MySQL, etc.)
+9. **Quick Tips for MySQL Extension (cweijan):**
+   - **Browse Tables**: Expand connection → Tables in sidebar
+   - **View Data**: Right-click table → "Open Table" or double-click table name
+   - **View Structure**: Right-click table → "View Structure" to see columns
+   - **Generate Queries**: Right-click table → "Generate Query" for auto-SELECT
+   - **Results Panel**: 
+     - Click column headers to sort
+     - Export results as CSV/JSON
+     - Copy cells or entire rows
+   - **Multiple Connections**: Can connect to multiple databases simultaneously
+   - **Query History**: Some versions save your recent queries
+   - **Auto-complete**: Extension provides SQL autocomplete as you type
 
 **For SQLite:**
 
@@ -490,6 +747,84 @@ For each exercise, verify:
    -- Numbers: 75000 not '75000' (unless column is text)
    ```
 
+### Troubleshooting MySQL Extension by cweijan
+
+**Connection Issues:**
+
+1. **"ECONNREFUSED" or "Connection failed"**
+   - **Check PostgreSQL is running:**
+     - Windows: Open Services (`Win+R` → `services.msc`), find "postgresql-x64-18", should be "Running"
+     - macOS/Linux: `brew services list` or `sudo systemctl status postgresql`
+   - **Verify connection settings:**
+     - Host: `localhost` (not `127.0.0.1` or IP address)
+     - Port: `5432` (default PostgreSQL port)
+     - Username: `postgres` (not `sql_mastery` or `root`)
+     - Database: `sql_mastery` (after creating it) or `postgres` (for initial connection)
+   - **Check password:** Make sure you're using the password you set during PostgreSQL installation
+
+2. **"Database does not exist"**
+   - Connect to `postgres` database first
+   - Run: `CREATE DATABASE sql_mastery;`
+   - Then disconnect and reconnect with Database set to `sql_mastery`
+
+3. **"Password authentication failed"**
+   - Verify you're using the correct password (set during PostgreSQL installation)
+   - Try resetting PostgreSQL password if forgotten (see PostgreSQL documentation)
+
+4. **"Server Type" confusion**
+   - **Important**: Select "PostgreSQL" as server type, NOT "MySQL"
+   - The extension name is "MySQL" but it supports PostgreSQL
+   - Make sure you click the PostgreSQL icon in the connection dialog
+
+**Query Execution Issues:**
+
+1. **Query doesn't run / No response**
+   - Make sure you're connected (check sidebar for green connection indicator)
+   - Verify you're connected to `sql_mastery` database (not `postgres`)
+   - Try selecting the query text before running
+   - Save the file before running queries
+   - Check the output panel for error messages
+
+2. **"Table does not exist"**
+   - Verify you ran `database/setup.sql` successfully
+   - Check extension sidebar: expand `sql_mastery` → "Tables" to see if tables exist
+   - If tables are missing, run `setup.sql` again
+
+3. **Results panel doesn't show**
+   - Check if results panel is minimized (look for a panel at the bottom)
+   - Try running a simple query: `SELECT 1;`
+   - Check extension output panel for errors
+
+4. **Multiple queries in one file**
+   - Select the specific query you want to run
+   - Or separate queries with semicolons and select all to run sequentially
+   - Some extensions run only the query where your cursor is positioned
+
+**Extension Not Working:**
+
+1. **Extension not appearing in sidebar**
+   - Reload VS Code/Cursor: `Ctrl+Shift+P` → "Reload Window"
+   - Check if extension is enabled in Extensions panel
+   - Try uninstalling and reinstalling the extension
+
+2. **"Run Query" option not showing**
+   - Make sure you have a `.sql` file open
+   - Select the query text first
+   - Check if extension is properly installed and enabled
+
+3. **Can't see database tables**
+   - Expand your connection in the sidebar
+   - Click the refresh icon to reload database structure
+   - Verify you're connected to the correct database
+
+**General Tips:**
+
+- **Always check the extension output panel** for detailed error messages
+- **Verify connection status** in the sidebar (green = connected, red = disconnected)
+- **Test with a simple query first**: `SELECT 1;` to verify connection works
+- **Restart VS Code/Cursor** if extension behaves unexpectedly
+- **Check extension settings** (`Ctrl+,` → search "mysql") for configuration options
+
 ## 🎯 Example: Complete Workflow
 
 ### Exercise: "Find employees with salary > 75000"
@@ -504,7 +839,11 @@ For each exercise, verify:
    WHERE salary > 75000;
    ```
 
-3. **Run the query** in your IDE (select query and press Ctrl+Shift+E, or use the SQL extension's run command)
+3. **Run the query** in your IDE:
+   - Make sure you're connected to `sql_mastery` database (check MySQL extension sidebar)
+   - Select the query text
+   - Right-click → "Run Query" (or click the "Run" button)
+   - Results appear in the panel below
 
 4. **Validate:**
    ```sql
