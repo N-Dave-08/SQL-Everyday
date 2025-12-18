@@ -99,18 +99,20 @@ Follow this step-by-step learning flow for each level:
 ## Getting Started
 
 1. **Read the Learning Guide**: Start with `LEARNING-GUIDE.md` for complete instructions on:
-   - How to set up your environment
+   - How to set up PostgreSQL (recommended) or SQLite
    - Where to save your solutions
-   - How to run SQL queries
+   - How to run SQL queries in your IDE
    - How to validate your answers
-2. **Set up the database**: Navigate to the `database/` folder and follow the setup instructions
-3. **Start with Level 1**: Begin with `level-01-fundamentals/lesson-01-introduction.md`
-4. **Follow the flow**: Read lessons → Attempt exercises → Test solutions → Iterate → Next level
+2. **Set up PostgreSQL**: Install PostgreSQL and create the database using `database/README.md`
+3. **Set up the database**: Run `database/setup.sql` to create tables and sample data
+4. **Start with Level 1**: Begin with `level-01-fundamentals/lesson-01-introduction.md`
+5. **Follow the flow**: Read lessons → Attempt exercises → Test solutions → Iterate → Next level
 
 ## Prerequisites
 
 - No prior SQL knowledge required
-- A SQL database client (SQLite recommended for simplicity)
+- **PostgreSQL** (Recommended - full feature support) or SQLite (simpler alternative)
+- A SQL client/extension for your IDE (PostgreSQL extension or SQLTools)
 - Basic computer literacy
 
 ## Resources

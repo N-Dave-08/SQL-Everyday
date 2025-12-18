@@ -1,5 +1,5 @@
 -- SQL Mastery Course Database Setup
--- Compatible with SQLite, MySQL, and PostgreSQL
+-- Optimized for PostgreSQL
 -- Run this script to create all tables and sample data
 
 -- ============================================
@@ -254,7 +254,7 @@ DROP VIEW IF EXISTS employee_summary;
 CREATE VIEW employee_summary AS
 SELECT 
     e.employee_id,
-    e.first_name || ' ' || e.last_name AS full_name,
+    CONCAT(e.first_name, ' ', e.last_name) AS full_name,
     e.job_title,
     e.salary,
     d.department_name,
@@ -267,7 +267,7 @@ DROP VIEW IF EXISTS sales_performance;
 CREATE VIEW sales_performance AS
 SELECT 
     s.sale_date,
-    e.first_name || ' ' || e.last_name AS employee_name,
+    CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
     p.product_name,
     s.quantity,
     s.total_amount,

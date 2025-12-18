@@ -6,26 +6,33 @@ This guide explains the complete learning workflow: how to progress, where to sa
 
 ### Step 1: Set Up Your Environment
 
-1. **Install a SQL Database Client**
-   - **SQLite** (Recommended for beginners): https://www.sqlite.org/download.html
-     - Or use online: https://sqliteonline.com/
-   - **MySQL**: https://dev.mysql.com/downloads/
-   - **PostgreSQL**: https://www.postgresql.org/download/
-   - **DB Browser for SQLite** (GUI tool): https://sqlitebrowser.org/
+1. **Install PostgreSQL** (Recommended)
+   - **Download**: https://www.postgresql.org/download/
+   - **Windows**: Use the official installer
+   - **macOS**: `brew install postgresql` or use Postgres.app
+   - **Linux**: `sudo apt-get install postgresql postgresql-contrib` (Ubuntu/Debian)
+   
+   **Alternative**: If you prefer SQLite for simplicity:
+   - **SQLite**: https://www.sqlite.org/download.html
+   - Or use online: https://sqliteonline.com/
 
 2. **Set Up the Course Database**
+
+   **For PostgreSQL (Recommended):**
    ```bash
-   # Navigate to database folder
+   # Create database
+   psql -U postgres
+   CREATE DATABASE sql_mastery;
+   \q
+   
+   # Run setup script
+   psql -U postgres -d sql_mastery -f database/setup.sql
+   ```
+   
+   **For SQLite (Alternative):**
+   ```bash
    cd database
-   
-   # For SQLite:
    sqlite3 sql_mastery.db < setup.sql
-   
-   # For MySQL:
-   mysql -u your_username -p sql_mastery < setup.sql
-   
-   # For PostgreSQL:
-   psql -U your_username -d sql_mastery -f setup.sql
    ```
 
 3. **Verify Setup**
@@ -33,6 +40,16 @@ This guide explains the complete learning workflow: how to progress, where to sa
    -- Run this to check if database is set up correctly
    SELECT COUNT(*) FROM employees;
    -- Should return: 15
+   ```
+   
+   **PostgreSQL:**
+   ```bash
+   psql -U postgres -d sql_mastery -c "SELECT COUNT(*) FROM employees;"
+   ```
+   
+   **SQLite:**
+   ```bash
+   sqlite3 database/sql_mastery.db "SELECT COUNT(*) FROM employees;"
    ```
 
 ### Step 2: Follow the Learning Path
@@ -140,36 +157,67 @@ level-01-fundamentals/
 
 #### Setup for VS Code/Cursor
 
-1. **Install SQLite Extension**
+**For PostgreSQL (Recommended):**
+
+1. **Install MySQL Extension by cweijan**
    - Open Extensions (Ctrl+Shift+X)
-   - Search for "SQLite" by `alexcvzz` (or "SQLTools" by `mtxr` as alternative)
+   - Search for "MySQL" by `cweijan`
+   - Install the extension (despite the name, it supports PostgreSQL, SQLite, and many databases)
+
+2. **Connect to PostgreSQL Database**
+   - Click the database icon in the left sidebar (or open Command Palette: Ctrl+Shift+P)
+   - Select "Add Connection" or click the "+" button
+   - Choose "PostgreSQL" as the database type
+   - Enter connection details:
+     - **Host**: `localhost`
+     - **Port**: `5432` (default PostgreSQL port)
+     - **Database**: `sql_mastery`
+     - **Username**: `postgres` (or your PostgreSQL username)
+     - **Password**: (your PostgreSQL password)
+   - Click "Connect" or "Save"
+
+3. **Run Queries**
+   - Open your `.sql` file (e.g., `my-solutions-01.sql`)
+   - Select the query (or place cursor in it)
+   - **Method A**: Right-click → "Run Query" or "Execute Query"
+   - **Method B**: Use the "Run" button in the editor toolbar
+   - **Method C**: Use keyboard shortcut (check extension settings)
+   - **Method D**: Use the extension's query panel
+
+4. **View Results**
+   - Results appear in a panel below your editor
+   - You can see the data in tabular format
+   - Row counts and execution time are displayed
+   - You can export results if needed
+
+**For SQLite (Alternative):**
+
+1. **Install SQLite Extension**
+   - Search for "SQLite" by `alexcvzz`
    - Install the extension
 
 2. **Connect to Database**
-   - Open your `.sql` file (e.g., `my-solutions-01.sql`)
-   - **For SQLite by alexcvzz**: 
-     - Right-click on the database file (`database/sql_mastery.db`) in the file explorer
-     - Select "Open Database" or use the SQLite extension's connection panel
-     - The database will appear in the SQLite extension sidebar
-   - Alternatively, use the command palette (Ctrl+Shift+P) → "SQLite: Open Database"
+   - Right-click on `database/sql_mastery.db` in file explorer
+   - Select "Open Database"
+   - Database appears in SQLite extension sidebar
 
 3. **Run Queries**
-   - **Method A**: Select the query and press `Ctrl+Shift+E` (or right-click → "Run Query")
-   - **Method B**: Use the "Execute Query" button in the editor toolbar
-   - **Method C**: Use the command palette (Ctrl+Shift+P → "SQLite: Run Query" or "SQL: Run Query")
-   - **Method D**: For SQLite by alexcvzz, you can also use the SQLite panel to run queries
+   - Select query and press `Ctrl+Shift+E` or right-click → "Run Query"
 
-4. **View Results**
-   - Results appear in a panel below or beside your editor
-   - You can see the data, row counts, and execution time
-   - SQLite by alexcvzz shows results in a dedicated results panel
+#### Quick Start Example with MySQL Extension (cweijan)
 
-#### Quick Start Example with SQLite by alexcvzz
+**For PostgreSQL:**
 
 1. **First-time setup:**
-   - Right-click `database/sql_mastery.db` in file explorer
-   - Select "Open Database" (or use SQLite extension panel)
-   - Database should appear in SQLite extension sidebar
+   - Install PostgreSQL and create database (see Step 1 above)
+   - Install "MySQL" extension by cweijan in VS Code/Cursor
+   - Add PostgreSQL connection:
+     - Click database icon in sidebar
+     - Click "+" or "Add Connection"
+     - Select "PostgreSQL"
+     - Enter: localhost, 5432, sql_mastery, postgres, (password)
+     - Click "Connect"
+   - Connection should appear in extension sidebar
 
 2. **Create and run queries:**
    - Create `level-01-fundamentals/my-solutions-01.sql`
@@ -179,14 +227,27 @@ level-01-fundamentals/
      FROM employees;
      ```
    - Select the query (or place cursor in it)
-   - Press `Ctrl+Shift+E` or right-click → "Run Query"
+   - Right-click → "Run Query" or click "Run" button
    - See results instantly in the results panel!
 
-3. **Quick tips for SQLite by alexcvzz:**
-   - The extension automatically detects SQLite database files
-   - You can see all tables in the SQLite sidebar
-   - Right-click tables to view data or structure
-   - Results are shown in a tabular format below your editor
+3. **Quick tips for MySQL extension (cweijan):**
+   - Browse tables in the extension sidebar
+   - Right-click tables to view data, structure, or generate queries
+   - Double-click tables to view all data
+   - Results panel shows data in tabular format with sorting/filtering
+   - You can export query results
+   - Extension supports multiple database types (PostgreSQL, SQLite, MySQL, etc.)
+
+**For SQLite:**
+
+1. **First-time setup:**
+   - Right-click `database/sql_mastery.db` in file explorer
+   - Select "Open Database"
+   - Database appears in SQLite extension sidebar
+
+2. **Create and run queries:**
+   - Same as above, but use SQLite extension commands
+   - Press `Ctrl+Shift+E` to run queries
 
 #### IDE Workflow Tips
 
@@ -406,10 +467,20 @@ For each exercise, verify:
 
 3. **Verify Table/Column Names**
    ```sql
-   -- Check what columns exist
-   PRAGMA table_info(employees);  -- SQLite
-   DESCRIBE employees;  -- MySQL
-   \d employees  -- PostgreSQL
+   -- PostgreSQL (recommended)
+   \d employees  -- Shows table structure
+   \d+ employees -- Shows detailed structure with indexes
+   
+   -- Or use SQL query
+   SELECT column_name, data_type 
+   FROM information_schema.columns 
+   WHERE table_name = 'employees';
+   
+   -- SQLite (alternative)
+   PRAGMA table_info(employees);
+   
+   -- MySQL (alternative)
+   DESCRIBE employees;
    ```
 
 4. **Check Data Types**
