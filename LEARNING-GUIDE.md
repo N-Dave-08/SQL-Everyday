@@ -15,7 +15,17 @@ This guide explains the complete learning workflow: how to progress, where to sa
    - **Linux**: `sudo apt-get install postgresql postgresql-contrib` (Ubuntu/Debian)
    
    **Verify PostgreSQL is running:**
-   - **Windows**: Open Services (Win+R → `services.msc`) and check for "postgresql-x64-18" (should be Running)
+   - **Windows (GUI)**: Open Services (Win+R → `services.msc`) and check for a service like "postgresql-x64-18" (or similar) – it should be **Running**
+   - **Windows (Command line)**:
+     ```powershell
+     -- Show all PostgreSQL services (PowerShell)
+     Get-Service *postgres*
+
+     -- Or using sc (Command Prompt / PowerShell)
+     sc query postgresql-x64-18
+     -- If you installed a different version, the name might be postgresql-x64-16 or similar
+     ```
+     - Look for `STATE` = `RUNNING`
    - **macOS/Linux**: `brew services list` or `sudo systemctl status postgresql`
    
    **Alternative**: If you prefer SQLite for simplicity:
@@ -753,14 +763,25 @@ For each exercise, verify:
 
 1. **"ECONNREFUSED" or "Connection failed"**
    - **Check PostgreSQL is running:**
-     - Windows: Open Services (`Win+R` → `services.msc`), find "postgresql-x64-18", should be "Running"
+     - Windows (GUI): Open Services (`Win+R` → `services.msc`), find `postgresql-x64-18` / `postgresql-x64-16`, Status = `Running`
+     - Windows (Command line):
+       ```powershell
+       Get-Service *postgres*
+       sc query postgresql-x64-18   # or postgresql-x64-16, etc.
+       ```
+       - Look for `STATE` = `RUNNING`
      - macOS/Linux: `brew services list` or `sudo systemctl status postgresql`
    - **Verify connection settings:**
-     - Host: `localhost` (not `127.0.0.1` or IP address)
+     - Host: `localhost` (OK if `127.0.0.1` too, but keep it simple)
      - Port: `5432` (default PostgreSQL port)
      - Username: `postgres` (not `sql_mastery` or `root`)
-     - Database: `sql_mastery` (after creating it) or `postgres` (for initial connection)
-   - **Check password:** Make sure you're using the password you set during PostgreSQL installation
+     - Database:
+       - `postgres` for the very first connection (to create `sql_mastery`)
+       - `sql_mastery` once the course database exists
+   - **Check password:** Make sure you're using the PostgreSQL password you set during installation
+   - If everything looks right but it still fails:
+     - Close and reopen Cursor / VS Code
+     - Delete the connection in the extension and recreate it from scratch
 
 2. **"Database does not exist"**
    - Connect to `postgres` database first
