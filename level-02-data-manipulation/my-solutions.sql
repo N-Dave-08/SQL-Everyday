@@ -147,6 +147,12 @@ COMMIT;
 --      Hint: CREATE TABLE employees_backup AS SELECT * FROM employees WHERE 1=0;
 --  2. Then, insert all employees from department 2 into the backup table
 --  3. Verify the backup was created correctly
+CREATE TABLE employees_backup AS SELECT * FROM employees WHERE 1=0;
+INSERT INTO employees_backup
+SELECT * FROM employees
+WHERE department_id = 2;
+SELECT * FROM employees_backup;
+
 
 
 
