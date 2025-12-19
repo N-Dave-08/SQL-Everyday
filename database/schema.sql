@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict X0HLKpG1UXeBwe65VTKTAkMFJb8SXN9jRnN3cQzpWJ3AyXM1XzkmMB6MJZ4rK25
+\restrict hosFga5IxnaTEsSl6Mc25WYCLWiWpNfZmbksioHgHuvbKRRzhepbinM0fWNy6sl
 
 -- Dumped from database version 18.1
 -- Dumped by pg_dump version 18.1
@@ -95,6 +95,39 @@ CREATE VIEW public.employee_summary AS
 ALTER VIEW public.employee_summary OWNER TO postgres;
 
 --
+-- Name: employees_backup; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.employees_backup (
+    employee_id integer,
+    first_name character varying(50),
+    last_name character varying(50),
+    email character varying(100),
+    phone character varying(20),
+    hire_date date,
+    job_title character varying(100),
+    salary numeric(10,2),
+    department_id integer
+);
+
+
+ALTER TABLE public.employees_backup OWNER TO postgres;
+
+--
+-- Name: employees_employee_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.employees ALTER COLUMN employee_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.employees_employee_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
 -- Name: order_items; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -142,6 +175,20 @@ CREATE TABLE public.products (
 
 
 ALTER TABLE public.products OWNER TO postgres;
+
+--
+-- Name: products_product_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.products ALTER COLUMN product_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.products_product_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
 
 --
 -- Name: sales; Type: TABLE; Schema: public; Owner: postgres
@@ -315,7 +362,7 @@ ALTER TABLE ONLY public.order_items
 --
 
 ALTER TABLE ONLY public.order_items
-    ADD CONSTRAINT order_items_product_id_fkey FOREIGN KEY (product_id) REFERENCES public.products(product_id);
+    ADD CONSTRAINT order_items_product_id_fkey FOREIGN KEY (product_id) REFERENCES public.products(product_id) ON DELETE CASCADE;
 
 
 --
@@ -346,5 +393,5 @@ ALTER TABLE ONLY public.sales
 -- PostgreSQL database dump complete
 --
 
-\unrestrict X0HLKpG1UXeBwe65VTKTAkMFJb8SXN9jRnN3cQzpWJ3AyXM1XzkmMB6MJZ4rK25
+\unrestrict hosFga5IxnaTEsSl6Mc25WYCLWiWpNfZmbksioHgHuvbKRRzhepbinM0fWNy6sl
 
