@@ -80,27 +80,9 @@ This folder contains the database schema and sample data for the SQL Mastery Cou
 - "PostgreSQL" by Chris Kolkman
 - "SQLTools" with PostgreSQL driver
 
-## Alternative Database Options
+## Important Note
 
-### Option 2: SQLite (Simpler, but limited features)
-
-1. **Install SQLite** (if not already installed):
-   - Download from: https://www.sqlite.org/download.html
-   - Or use online SQLite: https://sqliteonline.com/
-
-2. **Create the database**:
-   ```bash
-   sqlite3 sql_mastery.db < setup.sql
-   ```
-
-3. **Verify the setup**:
-   ```bash
-   sqlite3 sql_mastery.db
-   .tables
-   SELECT COUNT(*) FROM employees;
-   ```
-
-**Note**: Some features (stored procedures, advanced triggers) may not work in SQLite.
+**This course is designed for PostgreSQL.** All examples, exercises, and lessons use PostgreSQL syntax. While other databases like SQLite or MySQL can run basic queries, many advanced features covered in this course (stored procedures, advanced triggers, window functions, CTEs, etc.) require PostgreSQL. For the best learning experience, please use PostgreSQL.
 
 ### Option 3: MySQL/MariaDB
 

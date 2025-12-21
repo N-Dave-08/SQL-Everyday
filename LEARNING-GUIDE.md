@@ -28,9 +28,7 @@ This guide explains the complete learning workflow: how to progress, where to sa
      - Look for `STATE` = `RUNNING`
    - **macOS/Linux**: `brew services list` or `sudo systemctl status postgresql`
    
-   **Alternative**: If you prefer SQLite for simplicity:
-   - **SQLite**: https://www.sqlite.org/download.html
-   - Or use online: https://sqliteonline.com/
+   **Note**: This course is designed for PostgreSQL. While SQLite can be used for basic queries, many advanced features (stored procedures, advanced triggers, window functions, etc.) require PostgreSQL. All examples and exercises use PostgreSQL syntax.
 
 2. **Set Up the Course Database**
 

@@ -25,8 +25,6 @@ Starts a transaction:
 BEGIN TRANSACTION;
 -- or
 BEGIN;
--- or (SQLite)
-BEGIN IMMEDIATE;
 ```
 
 ### COMMIT
@@ -105,7 +103,7 @@ BEGIN CATCH
 END CATCH;
 ```
 
-**Note**: Syntax varies by database. SQLite has simpler error handling.
+**Note**: PostgreSQL uses exception handling with `BEGIN...EXCEPTION...END` blocks in PL/pgSQL. For SQL scripts, use application-level error handling.
 
 ## Savepoints
 
@@ -201,7 +199,7 @@ SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 ```
 
-**Note**: SQLite only supports SERIALIZABLE (simplified model).
+**Note**: PostgreSQL supports all isolation levels and uses MVCC (Multi-Version Concurrency Control) for efficient concurrency.
 
 ## Locking
 
@@ -280,35 +278,17 @@ BEGIN TRANSACTION;
 COMMIT;  -- Commits outer transaction
 ```
 
-## Database-Specific Notes
+## PostgreSQL Transaction Features
 
-### SQLite
+PostgreSQL provides excellent transaction support:
 
-- Simple transaction model
-- SERIALIZABLE isolation (default)
-- `BEGIN IMMEDIATE` for write transactions
-- Limited concurrent writes
-
-### MySQL (InnoDB)
-
-- Full ACID support
-- Multiple isolation levels
-- Row-level locking
-- Deadlock detection
-
-### PostgreSQL
-
-- Full ACID support
-- Advanced isolation levels
-- MVCC (Multi-Version Concurrency Control)
-- Excellent concurrency
-
-### SQL Server
-
-- Full ACID support
-- Multiple isolation levels
-- Locking hints available
-- Deadlock detection and resolution
+- **Full ACID compliance**: All ACID properties are fully supported
+- **Advanced isolation levels**: READ UNCOMMITTED, READ COMMITTED (default), REPEATABLE READ, SERIALIZABLE
+- **MVCC (Multi-Version Concurrency Control)**: Allows readers and writers to work concurrently without blocking
+- **Row-level locking**: Efficient locking at the row level
+- **Deadlock detection**: Automatically detects and resolves deadlocks
+- **Savepoints**: Support for nested transactions via savepoints
+- **Two-phase commit**: Support for distributed transactions
 
 ## Next Steps
 

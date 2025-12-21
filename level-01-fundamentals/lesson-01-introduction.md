@@ -9,11 +9,12 @@
 ### Relational Database Management System (RDBMS)
 
 A **Relational Database Management System** is software that stores data in tables that are related to each other. Popular RDBMS include:
-- SQLite (lightweight, file-based)
+- PostgreSQL (open-source, advanced features, full SQL standard support)
 - MySQL (open-source, widely used)
-- PostgreSQL (advanced features)
 - SQL Server (Microsoft)
 - Oracle (enterprise-level)
+
+**This course uses PostgreSQL**, which provides excellent support for all SQL features covered in these lessons.
 
 ### Database Structure
 

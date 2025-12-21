@@ -278,7 +278,7 @@ FROM customers c
 WHERE EXISTS (
     SELECT 1 FROM orders o
     WHERE o.customer_id = c.customer_id
-    AND o.order_date >= DATE('now', '-30 days')  -- SQLite syntax
+    AND o.order_date >= CURRENT_DATE - INTERVAL '30 days'  -- PostgreSQL syntax
 );
 ```
 

@@ -230,9 +230,9 @@ ORDER BY 3 DESC;
 
 ## LIMIT - Restricting Results
 
-`LIMIT` restricts the number of rows returned (syntax varies by database):
+`LIMIT` restricts the number of rows returned:
 
-### SQLite/MySQL/PostgreSQL
+### PostgreSQL
 
 ```sql
 -- Get top 5 highest paid employees

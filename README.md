@@ -99,7 +99,7 @@ Follow this step-by-step learning flow for each level:
 ## Getting Started
 
 1. **Read the Learning Guide**: Start with `LEARNING-GUIDE.md` for complete instructions on:
-   - How to set up PostgreSQL (recommended) or SQLite
+   - How to set up PostgreSQL (required for this course)
    - Where to save your solutions
    - How to run SQL queries in your IDE
    - How to validate your answers
@@ -111,7 +111,7 @@ Follow this step-by-step learning flow for each level:
 ## Prerequisites
 
 - No prior SQL knowledge required
-- **PostgreSQL** (Recommended - full feature support) or SQLite (simpler alternative)
+- **PostgreSQL** (Required - all examples and exercises use PostgreSQL syntax)
 - A SQL client/extension for your IDE (PostgreSQL extension or SQLTools)
 - Basic computer literacy
 

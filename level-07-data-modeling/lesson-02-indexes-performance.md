@@ -280,15 +280,26 @@ WHERE email LIKE 'john%@company.com';
 ### Viewing Indexes
 
 ```sql
--- List all indexes (syntax varies by database)
--- SQLite:
-SELECT name FROM sqlite_master WHERE type = 'index';
-
--- MySQL:
-SHOW INDEXES FROM employees;
-
--- PostgreSQL:
+-- List all indexes in PostgreSQL
+-- Using psql command:
 \di employees
+
+-- Using SQL query:
+SELECT 
+    indexname, 
+    indexdef 
+FROM pg_indexes 
+WHERE tablename = 'employees';
+
+-- List all indexes for a table:
+SELECT 
+    schemaname,
+    tablename,
+    indexname,
+    indexdef
+FROM pg_indexes
+WHERE tablename = 'employees'
+ORDER BY indexname;
 ```
 
 ### Dropping Indexes

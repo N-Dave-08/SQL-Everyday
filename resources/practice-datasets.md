@@ -58,9 +58,10 @@ Use the `sales` table to:
 
 ### Free SQL Practice Platforms
 
-1. **SQLite Online**
-   - https://sqliteonline.com/
-   - Practice with SQLite in your browser
+1. **Online SQL Practice**
+   - https://sqliteonline.com/ (supports PostgreSQL)
+   - https://www.db-fiddle.com/ (supports PostgreSQL)
+   - Practice with PostgreSQL in your browser
 
 2. **DB Fiddle**
    - https://www.db-fiddle.com/

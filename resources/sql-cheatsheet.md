@@ -281,8 +281,9 @@ TRIM(str)
 CURRENT_DATE
 CURRENT_TIMESTAMP
 DATE('2023-01-15')
-DATE_ADD(date, INTERVAL 1 DAY)  -- MySQL
-date('now', '+1 day')  -- SQLite
+CURRENT_DATE + INTERVAL '1 day'  -- PostgreSQL
+EXTRACT(YEAR FROM date_column)
+DATE_PART('year', date_column)  -- PostgreSQL
 ```
 
 ### Math Functions

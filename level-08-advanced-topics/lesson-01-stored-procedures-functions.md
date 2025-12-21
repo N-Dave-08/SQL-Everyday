@@ -13,32 +13,11 @@ A **stored procedure** is a prepared SQL code that you can save and reuse. Proce
 - **Security**: Control access to data
 - **Maintainability**: Centralized business logic
 
-**Note**: Syntax varies significantly between databases. This lesson provides conceptual understanding and examples that may need adjustment for your database.
+**Note**: This lesson focuses on PostgreSQL syntax. Stored procedures and functions are database-specific features.
 
 ## Basic Stored Procedure Syntax
 
-### SQL Server / SQLite (Limited Support)
-
-```sql
-CREATE PROCEDURE procedure_name
-AS
-BEGIN
-    -- SQL statements
-END;
-```
-
-### MySQL
-
-```sql
-DELIMITER //
-CREATE PROCEDURE procedure_name()
-BEGIN
-    -- SQL statements
-END //
-DELIMITER ;
-```
-
-### PostgreSQL
+### PostgreSQL Procedures
 
 ```sql
 CREATE OR REPLACE PROCEDURE procedure_name()
@@ -53,61 +32,70 @@ $$;
 ## Simple Procedure Example
 
 ```sql
--- Get employees in a department
-CREATE PROCEDURE GetEmployeesByDepartment
-    @DeptID INT  -- Parameter
-AS
+-- Get employees in a department (PostgreSQL)
+CREATE OR REPLACE PROCEDURE get_employees_by_department(dept_id INT)
+LANGUAGE plpgsql
+AS $$
 BEGIN
     SELECT first_name, last_name, salary
     FROM employees
-    WHERE department_id = @DeptID;
+    WHERE department_id = dept_id;
 END;
+$$;
 
 -- Call the procedure
-EXEC GetEmployeesByDepartment @DeptID = 1;
+CALL get_employees_by_department(1);
 ```
 
 ## Stored Functions
 
-A **function** is similar to a procedure but returns a value and can be used in SQL expressions.
+A **function** is similar to a procedure but returns a value and can be used in SQL expressions. In PostgreSQL, functions are more commonly used than procedures.
 
 ### Function Example
 
 ```sql
--- Calculate total payroll for a department
-CREATE FUNCTION GetDepartmentPayroll(@DeptID INT)
+-- Calculate total payroll for a department (PostgreSQL)
+CREATE OR REPLACE FUNCTION get_department_payroll(dept_id INT)
 RETURNS DECIMAL(10,2)
-AS
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    total DECIMAL(10,2);
 BEGIN
-    DECLARE @Total DECIMAL(10,2);
-    SELECT @Total = SUM(salary)
+    SELECT SUM(salary) INTO total
     FROM employees
-    WHERE department_id = @DeptID;
-    RETURN @Total;
+    WHERE department_id = dept_id;
+    RETURN total;
 END;
+$$;
 
 -- Use the function
 SELECT 
     department_id,
-    GetDepartmentPayroll(department_id) AS total_payroll
+    get_department_payroll(department_id) AS total_payroll
 FROM departments;
 ```
 
 ## Variables
 
-Variables store values temporarily:
+Variables store values temporarily in PostgreSQL functions/procedures:
 
 ```sql
--- Declare variable
-DECLARE @EmployeeCount INT;
-DECLARE @AvgSalary DECIMAL(10,2);
-
--- Set variable
-SET @EmployeeCount = (SELECT COUNT(*) FROM employees);
-SET @AvgSalary = (SELECT AVG(salary) FROM employees);
-
--- Use variable
-SELECT @EmployeeCount AS total_employees, @AvgSalary AS avg_salary;
+-- In a PostgreSQL function/procedure:
+CREATE OR REPLACE FUNCTION get_employee_stats()
+RETURNS TABLE(total_employees INT, avg_salary DECIMAL(10,2))
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    employee_count INT;
+    avg_sal DECIMAL(10,2);
+BEGIN
+    SELECT COUNT(*) INTO employee_count FROM employees;
+    SELECT AVG(salary) INTO avg_sal FROM employees;
+    
+    RETURN QUERY SELECT employee_count, avg_sal;
+END;
+$$;
 ```
 
 ## Control Flow
@@ -115,58 +103,60 @@ SELECT @EmployeeCount AS total_employees, @AvgSalary AS avg_salary;
 ### IF-ELSE
 
 ```sql
-IF condition
-BEGIN
+-- PostgreSQL syntax
+IF condition THEN
     -- statements
-END
+ELSIF condition THEN
+    -- statements
 ELSE
-BEGIN
     -- statements
-END;
+END IF;
 ```
 
 ### Example
 
 ```sql
-CREATE PROCEDURE CheckEmployeeCount
-    @DeptID INT
-AS
+CREATE OR REPLACE FUNCTION check_employee_count(dept_id INT)
+RETURNS TEXT
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    emp_count INT;
 BEGIN
-    DECLARE @Count INT;
-    SELECT @Count = COUNT(*) 
+    SELECT COUNT(*) INTO emp_count
     FROM employees 
-    WHERE department_id = @DeptID;
+    WHERE department_id = dept_id;
     
-    IF @Count > 10
-    BEGIN
-        SELECT 'Large Department' AS status;
-    END
+    IF emp_count > 10 THEN
+        RETURN 'Large Department';
     ELSE
-    BEGIN
-        SELECT 'Small Department' AS status;
-    END;
+        RETURN 'Small Department';
+    END IF;
 END;
+$$;
 ```
 
 ### WHILE Loop
 
 ```sql
-WHILE condition
-BEGIN
+-- PostgreSQL syntax
+WHILE condition LOOP
     -- statements
-END;
+END LOOP;
 ```
 
 ## Error Handling
 
 ```sql
-BEGIN TRY
+-- PostgreSQL exception handling
+BEGIN
     -- SQL statements
-END TRY
-BEGIN CATCH
-    -- Error handling
-    SELECT ERROR_MESSAGE();
-END CATCH;
+EXCEPTION
+    WHEN others THEN
+        -- Error handling
+        RAISE NOTICE 'Error occurred: %', SQLERRM;
+        RAISE;
+END;
 ```
 
 ## When to Use Stored Procedures
@@ -192,26 +182,17 @@ END CATCH;
 4. **Test thoroughly**: Test with various inputs
 5. **Version control**: Store procedures in version control
 
-## Database-Specific Notes
+## PostgreSQL Features
 
-### SQLite
+PostgreSQL provides excellent support for stored procedures and functions:
 
-SQLite has **limited support** for stored procedures. Consider using:
-- Application-level functions
-- Views for reusable queries
-- Triggers for automation
-
-### MySQL
-
-Full support with `DELIMITER` syntax for multi-statement procedures.
-
-### PostgreSQL
-
-Uses `plpgsql` language. Functions are more common than procedures.
-
-### SQL Server
-
-Full support with T-SQL language.
+- **PL/pgSQL language**: Full-featured procedural language
+- **Functions**: More commonly used than procedures, can return values
+- **Procedures**: Available in PostgreSQL 11+ for operations without return values
+- **Multiple languages**: Supports Python, Perl, and other languages via extensions
+- **Exception handling**: Robust error handling with EXCEPTION blocks
+- **Variables**: Full support for variables and control flow
+- **Performance**: Pre-compiled and optimized for better performance
 
 ## Next Steps
 
@@ -222,7 +203,7 @@ In the next lesson, you'll learn about Views and Triggers.
 **Key Takeaways:**
 - Stored procedures encapsulate SQL logic for reuse
 - Functions return values and can be used in expressions
-- Syntax varies significantly by database
+- PostgreSQL uses PL/pgSQL language for procedures and functions
+- Functions are more common than procedures in PostgreSQL
 - Use for complex business logic and security
-- SQLite has limited support (use application code instead)
 - Test and document procedures thoroughly

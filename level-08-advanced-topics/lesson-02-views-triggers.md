@@ -235,28 +235,16 @@ END;
 4. **Test carefully**: Triggers fire automatically - test all scenarios
 5. **Avoid cascading**: Triggers that trigger other triggers can be problematic
 
-## Database-Specific Notes
+## PostgreSQL Features
 
-### SQLite
+PostgreSQL provides comprehensive support for views and triggers:
 
-- **Views**: Full support
-- **Triggers**: Limited support (BEFORE/AFTER INSERT/UPDATE/DELETE)
-
-### MySQL
-
-- **Views**: Full support
-- **Triggers**: Full support
-
-### PostgreSQL
-
-- **Views**: Full support
-- **Materialized Views**: Supported
-- **Triggers**: Full support with plpgsql
-
-### SQL Server
-
-- **Views**: Full support
-- **Materialized Views**: Called "Indexed Views"
+- **Views**: Full support for standard and updatable views
+- **Materialized Views**: Supported for caching expensive query results
+- **Triggers**: Full support with BEFORE/AFTER triggers on INSERT/UPDATE/DELETE
+- **Trigger Functions**: Written in PL/pgSQL or other supported languages
+- **Row-level and Statement-level Triggers**: Both supported
+- **INSTEAD OF Triggers**: Supported for views
 - **Triggers**: Full support
 
 ## Common Patterns

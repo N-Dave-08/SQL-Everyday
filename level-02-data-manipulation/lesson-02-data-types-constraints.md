@@ -209,7 +209,7 @@ CREATE TABLE employees (
 );
 ```
 
-**Note**: CHECK constraints are supported in PostgreSQL and SQL Server, but have limited support in SQLite and MySQL.
+**Note**: CHECK constraints are fully supported in PostgreSQL and enforce data validation rules at the database level.
 
 ### DEFAULT
 
