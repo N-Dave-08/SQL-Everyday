@@ -20,22 +20,182 @@ CREATE TABLE employees (
     department_id INTEGER
 );
 
-INSERT INTO employees (employee_id, first_name, last_name, email, phone, hire_date, job_title, salary, department_id) VALUES
-(1, 'John', 'Smith', 'john.smith@company.com', '555-0101', '2020-01-15', 'Software Engineer', 75000.00, 1),
-(2, 'Sarah', 'Johnson', 'sarah.johnson@company.com', '555-0102', '2019-03-20', 'Data Analyst', 68000.00, 2),
-(3, 'Michael', 'Williams', 'michael.williams@company.com', '555-0103', '2021-06-10', 'Software Engineer', 72000.00, 1),
-(4, 'Emily', 'Brown', 'emily.brown@company.com', '555-0104', '2018-11-05', 'Marketing Manager', 85000.00, 3),
-(5, 'David', 'Jones', 'david.jones@company.com', '555-0105', '2022-02-14', 'Junior Developer', 55000.00, 1),
-(6, 'Jessica', 'Garcia', 'jessica.garcia@company.com', '555-0106', '2020-09-30', 'Data Analyst', 70000.00, 2),
-(7, 'Christopher', 'Miller', 'christopher.miller@company.com', '555-0107', '2019-07-22', 'Senior Engineer', 95000.00, 1),
-(8, 'Amanda', 'Davis', 'amanda.davis@company.com', '555-0108', '2021-04-18', 'HR Specialist', 60000.00, 4),
-(9, 'James', 'Rodriguez', 'james.rodriguez@company.com', '555-0109', '2020-12-01', 'Software Engineer', 78000.00, 1),
-(10, 'Lisa', 'Martinez', 'lisa.martinez@company.com', '555-0110', '2018-05-15', 'Sales Manager', 90000.00, 5),
-(11, 'Robert', 'Hernandez', 'robert.hernandez@company.com', '555-0111', '2022-08-20', 'Junior Developer', 56000.00, 1),
-(12, 'Maria', 'Lopez', 'maria.lopez@company.com', '555-0112', '2019-10-10', 'Data Analyst', 69000.00, 2),
-(13, 'Daniel', 'Wilson', 'daniel.wilson@company.com', '555-0113', '2021-01-25', 'Software Engineer', 74000.00, 1),
-(14, 'Jennifer', 'Anderson', 'jennifer.anderson@company.com', '555-0114', '2020-03-12', 'Marketing Specialist', 65000.00, 3),
-(15, 'Thomas', 'Thomas', 'thomas.thomas@company.com', '555-0115', '2018-08-08', 'Senior Engineer', 98000.00, 1);
+INSERT INTO employees (
+    employee_id,
+    first_name,
+    last_name,
+    email,
+    phone,
+    hire_date,
+    job_title,
+    salary,
+    department_id
+) VALUES
+(
+    1,
+    'John',
+    'Smith',
+    'john.smith@company.com',
+    '555-0101',
+    '2020-01-15',
+    'Software Engineer',
+    75000.00,
+    1
+),
+(
+    2,
+    'Sarah',
+    'Johnson',
+    'sarah.johnson@company.com',
+    '555-0102',
+    '2019-03-20',
+    'Data Analyst',
+    68000.00,
+    2
+),
+(
+    3,
+    'Michael',
+    'Williams',
+    'michael.williams@company.com',
+    '555-0103',
+    '2021-06-10',
+    'Software Engineer',
+    72000.00,
+    1
+),
+(
+    4,
+    'Emily',
+    'Brown',
+    'emily.brown@company.com',
+    '555-0104',
+    '2018-11-05',
+    'Marketing Manager',
+    85000.00,
+    3
+),
+(
+    5,
+    'David',
+    'Jones',
+    'david.jones@company.com',
+    '555-0105',
+    '2022-02-14',
+    'Junior Developer',
+    55000.00,
+    1
+),
+(
+    6,
+    'Jessica',
+    'Garcia',
+    'jessica.garcia@company.com',
+    '555-0106',
+    '2020-09-30',
+    'Data Analyst',
+    70000.00,
+    2
+),
+(
+    7,
+    'Christopher',
+    'Miller',
+    'christopher.miller@company.com',
+    '555-0107',
+    '2019-07-22',
+    'Senior Engineer',
+    95000.00,
+    1
+),
+(
+    8,
+    'Amanda',
+    'Davis',
+    'amanda.davis@company.com',
+    '555-0108',
+    '2021-04-18',
+    'HR Specialist',
+    60000.00,
+    4
+),
+(
+    9,
+    'James',
+    'Rodriguez',
+    'james.rodriguez@company.com',
+    '555-0109',
+    '2020-12-01',
+    'Software Engineer',
+    78000.00,
+    1
+),
+(
+    10,
+    'Lisa',
+    'Martinez',
+    'lisa.martinez@company.com',
+    '555-0110',
+    '2018-05-15',
+    'Sales Manager',
+    90000.00,
+    5
+),
+(
+    11,
+    'Robert',
+    'Hernandez',
+    'robert.hernandez@company.com',
+    '555-0111',
+    '2022-08-20',
+    'Junior Developer',
+    56000.00,
+    1
+),
+(
+    12,
+    'Maria',
+    'Lopez',
+    'maria.lopez@company.com',
+    '555-0112',
+    '2019-10-10',
+    'Data Analyst',
+    69000.00,
+    2
+),
+(
+    13,
+    'Daniel',
+    'Wilson',
+    'daniel.wilson@company.com',
+    '555-0113',
+    '2021-01-25',
+    'Software Engineer',
+    74000.00,
+    1
+),
+(
+    14,
+    'Jennifer',
+    'Anderson',
+    'jennifer.anderson@company.com',
+    '555-0114',
+    '2020-03-12',
+    'Marketing Specialist',
+    65000.00,
+    3
+),
+(
+    15,
+    'Thomas',
+    'Thomas',
+    'thomas.thomas@company.com',
+    '555-0115',
+    '2018-08-08',
+    'Senior Engineer',
+    98000.00,
+    1
+);
 
 -- Products table (for Level 1-2)
 DROP TABLE IF EXISTS products;
@@ -49,7 +209,15 @@ CREATE TABLE products (
     created_date DATE
 );
 
-INSERT INTO products (product_id, product_name, category, price, stock_quantity, supplier_id, created_date) VALUES
+INSERT INTO products (
+    product_id,
+    product_name,
+    category,
+    price,
+    stock_quantity,
+    supplier_id,
+    created_date
+) VALUES
 (1, 'Laptop Pro 15', 'Electronics', 1299.99, 45, 1, '2023-01-10'),
 (2, 'Wireless Mouse', 'Electronics', 29.99, 200, 1, '2023-02-15'),
 (3, 'Mechanical Keyboard', 'Electronics', 89.99, 120, 2, '2023-01-20'),
@@ -82,17 +250,138 @@ CREATE TABLE customers (
     registration_date DATE
 );
 
-INSERT INTO customers (customer_id, first_name, last_name, email, phone, address, city, state, zip_code, registration_date) VALUES
-(1, 'Alice', 'Thompson', 'alice.thompson@email.com', '555-1001', '123 Main St', 'New York', 'NY', '10001', '2023-01-05'),
-(2, 'Bob', 'Chen', 'bob.chen@email.com', '555-1002', '456 Oak Ave', 'Los Angeles', 'CA', '90001', '2023-01-12'),
-(3, 'Carol', 'White', 'carol.white@email.com', '555-1003', '789 Pine Rd', 'Chicago', 'IL', '60601', '2023-02-01'),
-(4, 'David', 'Lee', 'david.lee@email.com', '555-1004', '321 Elm St', 'Houston', 'TX', '77001', '2023-02-15'),
-(5, 'Eva', 'Martinez', 'eva.martinez@email.com', '555-1005', '654 Maple Dr', 'Phoenix', 'AZ', '85001', '2023-03-01'),
-(6, 'Frank', 'Taylor', 'frank.taylor@email.com', '555-1006', '987 Cedar Ln', 'Philadelphia', 'PA', '19101', '2023-03-10'),
-(7, 'Grace', 'Anderson', 'grace.anderson@email.com', '555-1007', '147 Birch Way', 'San Antonio', 'TX', '78201', '2023-03-20'),
-(8, 'Henry', 'Moore', 'henry.moore@email.com', '555-1008', '258 Spruce Ct', 'San Diego', 'CA', '92101', '2023-04-05'),
-(9, 'Iris', 'Jackson', 'iris.jackson@email.com', '555-1009', '369 Willow St', 'Dallas', 'TX', '75201', '2023-04-15'),
-(10, 'Jack', 'Harris', 'jack.harris@email.com', '555-1010', '741 Ash Ave', 'San Jose', 'CA', '95101', '2023-05-01');
+INSERT INTO customers (
+    customer_id,
+    first_name,
+    last_name,
+    email,
+    phone,
+    address,
+    city,
+    state,
+    zip_code,
+    registration_date
+) VALUES
+(
+    1,
+    'Alice',
+    'Thompson',
+    'alice.thompson@email.com',
+    '555-1001',
+    '123 Main St',
+    'New York',
+    'NY',
+    '10001',
+    '2023-01-05'
+),
+(
+    2,
+    'Bob',
+    'Chen',
+    'bob.chen@email.com',
+    '555-1002',
+    '456 Oak Ave',
+    'Los Angeles',
+    'CA',
+    '90001',
+    '2023-01-12'
+),
+(
+    3,
+    'Carol',
+    'White',
+    'carol.white@email.com',
+    '555-1003',
+    '789 Pine Rd',
+    'Chicago',
+    'IL',
+    '60601',
+    '2023-02-01'
+),
+(
+    4,
+    'David',
+    'Lee',
+    'david.lee@email.com',
+    '555-1004',
+    '321 Elm St',
+    'Houston',
+    'TX',
+    '77001',
+    '2023-02-15'
+),
+(
+    5,
+    'Eva',
+    'Martinez',
+    'eva.martinez@email.com',
+    '555-1005',
+    '654 Maple Dr',
+    'Phoenix',
+    'AZ',
+    '85001',
+    '2023-03-01'
+),
+(
+    6,
+    'Frank',
+    'Taylor',
+    'frank.taylor@email.com',
+    '555-1006',
+    '987 Cedar Ln',
+    'Philadelphia',
+    'PA',
+    '19101',
+    '2023-03-10'
+),
+(
+    7,
+    'Grace',
+    'Anderson',
+    'grace.anderson@email.com',
+    '555-1007',
+    '147 Birch Way',
+    'San Antonio',
+    'TX',
+    '78201',
+    '2023-03-20'
+),
+(
+    8,
+    'Henry',
+    'Moore',
+    'henry.moore@email.com',
+    '555-1008',
+    '258 Spruce Ct',
+    'San Diego',
+    'CA',
+    '92101',
+    '2023-04-05'
+),
+(
+    9,
+    'Iris',
+    'Jackson',
+    'iris.jackson@email.com',
+    '555-1009',
+    '369 Willow St',
+    'Dallas',
+    'TX',
+    '75201',
+    '2023-04-15'
+),
+(
+    10,
+    'Jack',
+    'Harris',
+    'jack.harris@email.com',
+    '555-1010',
+    '741 Ash Ave',
+    'San Jose',
+    'CA',
+    '95101',
+    '2023-05-01'
+);
 
 -- Orders table
 DROP TABLE IF EXISTS orders;
@@ -103,10 +392,12 @@ CREATE TABLE orders (
     total_amount DECIMAL(10, 2),
     status VARCHAR(20),
     shipping_address VARCHAR(200),
-    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+    FOREIGN KEY (customer_id) REFERENCES customers (customer_id)
 );
 
-INSERT INTO orders (order_id, customer_id, order_date, total_amount, status, shipping_address) VALUES
+INSERT INTO orders (
+    order_id, customer_id, order_date, total_amount, status, shipping_address
+) VALUES
 (1, 1, '2023-05-10', 1299.99, 'Delivered', '123 Main St, New York, NY 10001'),
 (2, 2, '2023-05-12', 89.99, 'Delivered', '456 Oak Ave, Los Angeles, CA 90001'),
 (3, 3, '2023-05-15', 599.99, 'Shipped', '789 Pine Rd, Chicago, IL 60601'),
@@ -114,9 +405,23 @@ INSERT INTO orders (order_id, customer_id, order_date, total_amount, status, shi
 (5, 4, '2023-05-20', 349.99, 'Processing', '321 Elm St, Houston, TX 77001'),
 (6, 5, '2023-05-22', 299.99, 'Delivered', '654 Maple Dr, Phoenix, AZ 85001'),
 (7, 2, '2023-05-25', 249.99, 'Shipped', '456 Oak Ave, Los Angeles, CA 90001'),
-(8, 6, '2023-05-28', 79.99, 'Delivered', '987 Cedar Ln, Philadelphia, PA 19101'),
+(
+    8,
+    6,
+    '2023-05-28',
+    79.99,
+    'Delivered',
+    '987 Cedar Ln, Philadelphia, PA 19101'
+),
 (9, 3, '2023-06-01', 49.99, 'Processing', '789 Pine Rd, Chicago, IL 60601'),
-(10, 7, '2023-06-05', 1299.99, 'Shipped', '147 Birch Way, San Antonio, TX 78201'),
+(
+    10,
+    7,
+    '2023-06-05',
+    1299.99,
+    'Shipped',
+    '147 Birch Way, San Antonio, TX 78201'
+),
 (11, 8, '2023-06-08', 39.99, 'Delivered', '258 Spruce Ct, San Diego, CA 92101'),
 (12, 1, '2023-06-10', 19.99, 'Delivered', '123 Main St, New York, NY 10001'),
 (13, 9, '2023-06-12', 599.99, 'Processing', '369 Willow St, Dallas, TX 75201'),
@@ -132,11 +437,13 @@ CREATE TABLE order_items (
     quantity INTEGER NOT NULL,
     unit_price DECIMAL(10, 2) NOT NULL,
     subtotal DECIMAL(10, 2),
-    FOREIGN KEY (order_id) REFERENCES orders(order_id),
-    FOREIGN KEY (product_id) REFERENCES products(product_id)
+    FOREIGN KEY (order_id) REFERENCES orders (order_id),
+    FOREIGN KEY (product_id) REFERENCES products (product_id)
 );
 
-INSERT INTO order_items (order_item_id, order_id, product_id, quantity, unit_price, subtotal) VALUES
+INSERT INTO order_items (
+    order_item_id, order_id, product_id, quantity, unit_price, subtotal
+) VALUES
 (1, 1, 1, 1, 1299.99, 1299.99),
 (2, 2, 3, 1, 89.99, 89.99),
 (3, 3, 5, 1, 599.99, 599.99),
@@ -165,12 +472,14 @@ DROP TABLE IF EXISTS departments;
 CREATE TABLE departments (
     department_id INTEGER PRIMARY KEY,
     department_name VARCHAR(100) NOT NULL,
-    location VARCHAR(100),
+    department_location VARCHAR(100),
     budget DECIMAL(12, 2),
     manager_id INTEGER
 );
 
-INSERT INTO departments (department_id, department_name, location, budget, manager_id) VALUES
+INSERT INTO departments (
+    department_id, department_name, location, budget, manager_id
+) VALUES
 (1, 'Engineering', 'Building A, Floor 3', 500000.00, 7),
 (2, 'Data Analytics', 'Building A, Floor 2', 300000.00, 2),
 (3, 'Marketing', 'Building B, Floor 1', 400000.00, 4),
@@ -188,11 +497,20 @@ CREATE TABLE sales (
     unit_price DECIMAL(10, 2) NOT NULL,
     total_amount DECIMAL(10, 2),
     region VARCHAR(50),
-    FOREIGN KEY (employee_id) REFERENCES employees(employee_id),
-    FOREIGN KEY (product_id) REFERENCES products(product_id)
+    FOREIGN KEY (employee_id) REFERENCES employees (employee_id),
+    FOREIGN KEY (product_id) REFERENCES products (product_id)
 );
 
-INSERT INTO sales (sale_id, employee_id, product_id, sale_date, quantity, unit_price, total_amount, region) VALUES
+INSERT INTO sales (
+    sale_id,
+    employee_id,
+    product_id,
+    sale_date,
+    quantity,
+    unit_price,
+    total_amount,
+    region
+) VALUES
 (1, 10, 1, '2024-01-05', 2, 1299.99, 2599.98, 'West'),
 (2, 10, 3, '2024-01-06', 1, 89.99, 89.99, 'West'),
 (3, 4, 5, '2024-01-07', 1, 599.99, 599.99, 'East'),
@@ -232,18 +550,48 @@ CREATE TABLE suppliers (
     address VARCHAR(200)
 );
 
-INSERT INTO suppliers (supplier_id, supplier_name, contact_name, email, phone, address) VALUES
-(1, 'TechSupply Co', 'John Supplier', 'contact@techsupply.com', '555-2001', '100 Tech Blvd'),
-(2, 'ElectroParts Inc', 'Jane Parts', 'info@electroparts.com', '555-2002', '200 Electronic Ave'),
-(3, 'OfficeFurniture Pro', 'Bob Furniture', 'sales@officefurniture.com', '555-2003', '300 Furniture St'),
-(4, 'Accessories Plus', 'Alice Accessories', 'hello@accessoriesplus.com', '555-2004', '400 Accessory Rd');
+INSERT INTO suppliers (
+    supplier_id, supplier_name, contact_name, email, phone, address
+) VALUES
+(
+    1,
+    'TechSupply Co',
+    'John Supplier',
+    'contact@techsupply.com',
+    '555-2001',
+    '100 Tech Blvd'
+),
+(
+    2,
+    'ElectroParts Inc',
+    'Jane Parts',
+    'info@electroparts.com',
+    '555-2002',
+    '200 Electronic Ave'
+),
+(
+    3,
+    'OfficeFurniture Pro',
+    'Bob Furniture',
+    'sales@officefurniture.com',
+    '555-2003',
+    '300 Furniture St'
+),
+(
+    4,
+    'Accessories Plus',
+    'Alice Accessories',
+    'hello@accessoriesplus.com',
+    '555-2004',
+    '400 Accessory Rd'
+);
 
 -- Create indexes for performance examples
-CREATE INDEX idx_employees_department ON employees(department_id);
-CREATE INDEX idx_orders_customer ON orders(customer_id);
-CREATE INDEX idx_orders_date ON orders(order_date);
-CREATE INDEX idx_sales_date ON sales(sale_date);
-CREATE INDEX idx_sales_employee ON sales(employee_id);
+CREATE INDEX idx_employees_department ON employees (department_id);
+CREATE INDEX idx_orders_customer ON orders (customer_id);
+CREATE INDEX idx_orders_date ON orders (order_date);
+CREATE INDEX idx_sales_date ON sales (sale_date);
+CREATE INDEX idx_sales_employee ON sales (employee_id);
 
 -- ============================================
 -- Views (for Level 8)
@@ -252,29 +600,29 @@ CREATE INDEX idx_sales_employee ON sales(employee_id);
 -- View: Employee Summary
 DROP VIEW IF EXISTS employee_summary;
 CREATE VIEW employee_summary AS
-SELECT 
+SELECT
     e.employee_id,
-    CONCAT(e.first_name, ' ', e.last_name) AS full_name,
     e.job_title,
     e.salary,
     d.department_name,
-    e.hire_date
-FROM employees e
-LEFT JOIN departments d ON e.department_id = d.department_id;
+    e.hire_date,
+    CONCAT(e.first_name, ' ', e.last_name) AS full_name
+FROM employees AS e
+LEFT JOIN departments AS d ON e.department_id = d.department_id;
 
 -- View: Sales Performance
 DROP VIEW IF EXISTS sales_performance;
 CREATE VIEW sales_performance AS
-SELECT 
+SELECT
     s.sale_date,
-    CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
     p.product_name,
     s.quantity,
     s.total_amount,
-    s.region
-FROM sales s
-JOIN employees e ON s.employee_id = e.employee_id
-JOIN products p ON s.product_id = p.product_id;
+    s.region,
+    CONCAT(e.first_name, ' ', e.last_name) AS employee_name
+FROM sales AS s
+INNER JOIN employees AS e ON s.employee_id = e.employee_id
+INNER JOIN products AS p ON s.product_id = p.product_id;
 
 -- ============================================
 -- Sample Queries to Verify Setup

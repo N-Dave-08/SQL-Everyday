@@ -1,0 +1,12 @@
+[sqlfluff]
+dialect = postgres          
+templater = raw
+exclude_rules = LT05,ST06     
+
+[sqlfluff:rules]
+# Uncomment to relax strict layout if desired:
+# layout.select_targets = False
+# layout.cte_newline = False
+# layout.long_lines = False
+# aliasing.table = False
+# ambiguous.join = False
