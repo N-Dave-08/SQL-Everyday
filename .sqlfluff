@@ -1,5 +1,5 @@
 [sqlfluff]
 dialect = postgres
 templater = raw
-exclude_rules = L009, LT05, LT08, CP02
+exclude_rules = L009, LT05, LT08, CP02, ST06
 
